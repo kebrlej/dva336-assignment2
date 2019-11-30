@@ -11,6 +11,8 @@ void M_emittor(int first, int last){
 			}
 			return;
 		}
+
+		
 		x.send(sendWorkTo);
 
 		sendWorkTo++;
