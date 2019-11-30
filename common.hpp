@@ -3,7 +3,7 @@
 #include <mpi.h>
 #include <stdio.h>
 #include <unistd.h> //usleep
-#define NDEBUG //comment to enable asserts
+//#define NDEBUG //comment to enable asserts
 #include <assert.h>
 
 #define TAG 42
@@ -49,8 +49,9 @@ static int f2(int n) { sleep_milliseconds(T_f2); return n*n;}
 static void M_first(const int receiver) {
 	streamelement x;
 	for(int i=0; i<STREAM_LENGTH; ++i) {
-		for(int j=0; j<STREAM_ELEMENT_SIZE; ++j)
+		for(int j=0; j<STREAM_ELEMENT_SIZE; ++j){
 			x[j] = f0(j);
+		}
 		x.send(receiver);
 	}
 	x.set_terminated();

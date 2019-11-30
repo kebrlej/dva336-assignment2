@@ -1,6 +1,13 @@
 #include <mpi.h>
 #include <stdio.h>
 
+/*
+1) The first time the ring is perform, all the processes anounce that they reached the barrier to the next processe.
+The second time, the processes send that they can leave the barrier and continue working because all the other have reached the barrier.
+
+O(n)
+
+*/
 void My_Barrier(MPI_Comm comm) {
    int rank, size, message;
    MPI_Comm_size(MPI_COMM_WORLD, &size);
@@ -19,12 +26,6 @@ void My_Barrier(MPI_Comm comm) {
       MPI_Recv(&message, count, MPI_INT, (rank-1)%size, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
       MPI_Send(&message, count, MPI_INT, (rank+1)%size, tag, MPI_COMM_WORLD);
    }
-   // else{
-   // 	  MPI_Recv(&message, count, MPI_INT, rank-1, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-   //    MPI_Send(&message, count, MPI_INT, rank+1, tag, MPI_COMM_WORLD);
-   //    MPI_Recv(&message, count, MPI_INT, rank-1, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-   //    MPI_Send(&message, count, MPI_INT, rank+1, tag, MPI_COMM_WORLD);
-   // }
 }
 
 int main(int argc, char **argv) {
